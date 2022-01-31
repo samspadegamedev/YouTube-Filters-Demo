@@ -3,9 +3,9 @@
 /*
 
 Notes on Creating a FX
-- Must exist in at least one room. For this project, it exists in rm_include_fx
 - Name is a string
 - Name may not match the effect name - note _filter_greyscale instead of Desaturate
+- Some names are listed in the manual
 - You can get the name of a filter with fx_get_name
 - You must actually apply the struct that is created to a layer for it to do anything
 
@@ -46,18 +46,19 @@ Notes on Modifying an Existing FX
 //Blur
 if (keyboard_check_pressed(ord("2"))) {
 
-	blur_active = !blur_active;
+	//The commented out lines still demonstrate one way to modify a value in a filter, but to merely enable or disable a filter, use the new layer_enable_fx function
+	//blur_active = !blur_active;
+	//var _fx_struct, _value;
+	//_fx_struct = layer_get_fx("BlurEffect");
+	//_value = blur_active ? 10 : 0;
+	//fx_set_parameter(_fx_struct, "g_Radius", _value);
 
-	var _fx_struct, _value;
-	_fx_struct = layer_get_fx("BlurEffect");
-	_value = blur_active ? 10 : 0;
-	fx_set_parameter(_fx_struct, "g_Radius", _value);
+	layer_enable_fx("BlurEffect", !layer_fx_is_enabled("BlurEffect"));
 
-	
 }
 
 
-//Heat Haze
+//colorize
 if (keyboard_check_pressed(ord("3"))) {
 
 	colorize_active = !colorize_active;
@@ -73,5 +74,20 @@ if (keyboard_check_pressed(ord("3"))) {
 	fx_set_parameters(_fx_struct, _fx_params);
 
 }
+
+
+
+//toggle pixelate layer
+if (keyboard_check_pressed(ord("4"))) {
+	var _fx_struct = layer_get_fx("Player");
+	fx_set_single_layer(_fx_struct, !fx_get_single_layer(_fx_struct));
+}
+
+
+
+
+
+
+
 
 
